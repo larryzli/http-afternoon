@@ -22,6 +22,11 @@ class User extends Component {
         user: response.data
       });
     });
+    axios.get(`/api/blogs/user/${id}`).then(response => {
+      this.setState({
+        posts: response.data
+      });
+    });
   }
 
   render() {
