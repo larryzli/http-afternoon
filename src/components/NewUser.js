@@ -38,12 +38,10 @@ class NewUser extends Component {
       desc: this.state.desc
     };
     const id = this.props.match.params.id;
-    console.log("ID: " + id);
-    axios
+    return axios
       .put(`/api/users/${id}`, userData)
       .then(response => {
         let id = response.data.id;
-        console.log("ID: " + id);
         this.props.history.push(`/user/${id}`);
       })
       .catch(console.log);
@@ -52,7 +50,6 @@ class NewUser extends Component {
   // insert deleteUser
   deleteUser() {
     let id = this.props.match.params.id;
-    console.log("ID: " + id);
     axios
       .delete(`/api/user/${id}`)
       .then(() => {
