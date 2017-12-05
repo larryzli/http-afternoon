@@ -17,16 +17,28 @@ class User extends Component {
   // insert componentWillMount
   componentWillMount() {
     const id = this.props.match.params.id;
-    axios.get(`/api/user/${id}`).then(response => {
-      this.setState({
-        user: response.data
-      });
-    });
-    axios.get(`/api/blogs/user/${id}`).then(response => {
-      this.setState({
-        posts: response.data
-      });
-    });
+    // axios.get(`/api/user/${id}`).then(response => {
+    //   this.setState({
+    //     user: response.data
+    //   });
+    // });
+    // axios.get(`/api/blogs/user/${id}`).then(response => {
+    //   this.setState({
+    //     posts: response.data
+    //   });
+    // });
+
+    const getUserData = () => axios.get(`/api/user/${id}`);
+    const getUserPosts = () => axios.get(`/api/blogs/user/${id}`);
+
+    axios.all([getUserData(), getUserPosts()]).then(
+      axios.spread((userDataResponse, userPostsResponse) => {
+        this.setState({
+          user: userDataResponse.data,
+          posts: userPostsResponse.data
+        });
+      })
+    );
   }
 
   render() {
